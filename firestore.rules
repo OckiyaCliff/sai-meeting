@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow users to read and write only their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Meeting rules - users can read meetings they're invited to
+    match /meetings/{meetingId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && (
+        resource.data.organizer.uid == request.auth.uid || 
+        request.auth.token.email in resource.data.participants
+      );
+      allow update, delete: if request.auth != null && resource.data.organizer.uid == request.auth.uid;
+    }
+    
+    // Notifications - users can only read their own notifications
+    match /notifications/{notificationId} {
+      allow read: if request.auth != null && resource.data.recipient == request.auth.token.email;
+      allow write: if false; // Only server can write notifications
+    }
+    
+    // User preferences for AI learning
+    match /userPreferences/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
+
