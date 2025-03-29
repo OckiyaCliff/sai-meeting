@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { CalendarClock, LayoutDashboard, Calendar, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -39,7 +40,7 @@ export default function DashboardNav({ isMobile = false }: DashboardNavProps) {
     return (
       <div className="flex flex-col space-y-2">
         <Link href="/" className="flex items-center space-x-2 mb-6">
-          <CalendarClock className="h-6 w-6 text-primary" />
+          <Image src="/sai-logo.png" alt="SAi Meeting Logo" width={32} height={32} />
           <span className="font-bold inline-block">SAi Meeting</span>
         </Link>
         <nav className="flex flex-col space-y-1">
@@ -69,7 +70,7 @@ export default function DashboardNav({ isMobile = false }: DashboardNavProps) {
   return (
     <div className="flex items-center space-x-4 lg:space-x-6">
       <Link href="/" className="flex items-center space-x-2">
-        <CalendarClock className="h-6 w-6 text-primary" />
+        <Image src="/sai-logo.png" alt="SAi Meeting Logo" width={28} height={28} />
         <span className="font-bold inline-block">SAi Meeting</span>
       </Link>
       <nav className="flex items-center space-x-4 lg:space-x-6">

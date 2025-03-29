@@ -8,10 +8,10 @@ from sklearn.model_selection import train_test_split
 import joblib
 import os
 
-
+# Model file path
 MODEL_PATH = 'models/meeting_predictor.joblib'
 
-
+# Features used for prediction
 FEATURES = ['dayOfWeek', 'hourOfDay', 'duration', 'participantCount', 'meetingType']
 
 def train_model(data_path):

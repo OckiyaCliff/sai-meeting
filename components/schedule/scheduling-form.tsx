@@ -109,9 +109,23 @@ export default function SchedulingForm({ user, initialData }: SchedulingFormProp
 
       if (initialData.date) {
         try {
-          const date = new Date(initialData.date)
+          // Ensure date is in a valid format
+          let dateToUse
+          if (typeof initialData.date === "string" && initialData.date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            // ISO format YYYY-MM-DD
+            dateToUse = new Date(initialData.date + "T00:00:00")
+          } else {
+            // Try to parse as regular date string
+            dateToUse = new Date(initialData.date)
+          }
+
+          // Check if date is valid
+          if (isNaN(dateToUse.getTime())) {
+            throw new Error("Invalid date")
+          }
+
           // Ensure the date is not in the past
-          const validDate = isBefore(date, currentDate) ? addDays(currentDate, 1) : date
+          const validDate = isBefore(dateToUse, currentDate) ? addDays(currentDate, 1) : dateToUse
           form.setValue("date", validDate)
         } catch (error) {
           console.error("Error parsing date:", error)

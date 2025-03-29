@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BrainCircuit, Clock, Check, Loader2 } from "lucide-react"
+import MeetingSlotRating from "@/components/schedule/meeting-slot-rating"
 
 interface AITimeSlotsProps {
   suggestions: string[]
@@ -67,20 +68,29 @@ export default function AITimeSlots({ suggestions, isLoading, selectedSlot, onSe
       <CardContent>
         <div className="space-y-2">
           {suggestions.map((slot, index) => (
-            <Button
-              key={index}
-              variant="outline"
-              className={`w-full justify-start h-auto py-3 px-4 ${
-                selectedSlot === slot ? "border-[#7366f6] bg-[#7366f6]/10" : ""
-              }`}
-              onClick={() => onSelectSlot(slot)}
-            >
-              <div className="flex items-center">
-                <Clock className="h-4 w-4 mr-2 text-[#ad6bfe]" />
-                <span>{slot}</span>
-                {selectedSlot === slot && <Check className="h-4 w-4 ml-2 text-[#7366f6]" />}
-              </div>
-            </Button>
+            <div key={index} className="flex flex-col space-y-1">
+              <Button
+                variant="outline"
+                className={`w-full justify-start h-auto py-3 px-4 ${
+                  selectedSlot === slot ? "border-[#7366f6] bg-[#7366f6]/10" : ""
+                }`}
+                onClick={() => onSelectSlot(slot)}
+              >
+                <div className="flex items-center">
+                  <Clock className="h-4 w-4 mr-2 text-[#ad6bfe]" />
+                  <span>{slot}</span>
+                  {selectedSlot === slot && <Check className="h-4 w-4 ml-2 text-[#7366f6]" />}
+                </div>
+              </Button>
+              {selectedSlot === slot && (
+                <div className="flex justify-end px-2">
+                  <div className="flex items-center">
+                    <span className="text-xs text-muted-foreground mr-2">Rate this slot:</span>
+                    <MeetingSlotRating meetingId="suggestion" timeSlot={slot} />
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </div>
         <div className="mt-4 text-xs text-muted-foreground">

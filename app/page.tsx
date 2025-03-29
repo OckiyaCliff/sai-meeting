@@ -4,6 +4,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { CalendarClock, Menu, X } from "lucide-react"
 import { useState } from "react"
+// Import Image component
+import Image from "next/image"
 
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -12,9 +14,10 @@ export default function LandingPage() {
     <div className="flex flex-col min-h-screen">
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+          {/* Replace it with this updated version that includes the logo */}
           <div className="flex items-center gap-2">
-            <CalendarClock className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">SAi Meeting</span>
+            <Image src="/sai-logo.png" alt="SAi Meeting Logo" width={32} height={32} />
+            <span className="text-xl font-bold">Meeting</span>
           </div>
 
           {/* Mobile menu button */}

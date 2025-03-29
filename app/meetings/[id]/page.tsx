@@ -26,6 +26,8 @@ import {
 import { Calendar, Clock, MapPin, Users, Trash2, Edit, ExternalLink, Copy, CheckCircle } from "lucide-react"
 import { getMeeting, deleteMeeting } from "@/lib/firestore-setup"
 import { Timestamp } from "firebase/firestore"
+// Import the MeetingSlotRating component
+import MeetingSlotRating from "@/components/schedule/meeting-slot-rating"
 
 export default function MeetingDetailPage() {
   const { user, loading: authLoading } = useAuth()
@@ -192,6 +194,12 @@ export default function MeetingDetailPage() {
               <div>
                 <p className="font-medium">Time</p>
                 <p className="text-muted-foreground">{meeting.timeSlot?.split(" at ")[1] || "Not specified"}</p>
+                {meeting.timeSlot && (
+                  <div className="mt-2">
+                    <p className="text-xs text-muted-foreground mb-1">Rate this meeting time:</p>
+                    <MeetingSlotRating meetingId={meetingId} timeSlot={meeting.timeSlot} />
+                  </div>
+                )}
               </div>
             </div>
 
